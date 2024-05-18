@@ -15,8 +15,6 @@
 	  profile = "personal";
 	  timezone = "America/LosAngeles";
 	  locale = "en_us.UTF-8";
-	  bootMode = "uefi";
-	  bootMountPath = "/boot";
 	};
 	userSettings = {
 	  username = "marquessv";
@@ -35,8 +33,8 @@
 	nixpkgsFor = forAllSystems (system: import inputs.nixpkgs { inherit system; });
   in {
     nixosConfigurations = {
-      jefe = lib.nixosSystem {
-        inherit systemSettings;
+      jefe = nixpkgs.lib.nixosSystem {
+        system = systemSettings.system;
 	modules = [ 
 	  ./configuration.nix
 	  ./hardware-configuration.nix
@@ -49,7 +47,7 @@
       };
     };
     homeConfigurations = {
-       user = home-manager.lib.homeManagerConfiguration {
+       marquessv = home-manager.lib.homeManagerConfiguration {
          inherit pkgs;
          modules = [ ./home.nix ];
 	 extraSpecialArgs = {

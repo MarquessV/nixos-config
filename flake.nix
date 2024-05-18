@@ -28,5 +28,23 @@
          modules = [ ./home.nix ];
        };
     };
+
+    packages = forAllSystems (system:
+      let pkgs = nixpkgsFor.${system};
+      in {
+        default = self.packages.${system}.install;
+	install = pkgs.writeShellApplication {
+	  name = "install";
+	  text = ''${./install.sh}'';
+	};	
+      };)
+    
+    apps = forAllSytems (system: {
+      default = self.apps.${system}.install;
+      install = {
+        type = "app";
+	program = "${self.packages.${system}.install}/bin/install";
+      }
+    }
   };
 }

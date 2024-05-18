@@ -44,7 +44,7 @@
       install = {
         type = "app";
 	program = "${self.packages.${system}.install}/bin/install";
-      }
-    }
+      };
+    });
   };
 }

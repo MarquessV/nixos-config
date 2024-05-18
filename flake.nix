@@ -37,7 +37,7 @@
 	  name = "install";
 	  text = ''${./install.sh}'';
 	};	
-      };)
+      });
     
     apps = forAllSytems (system: {
       default = self.apps.${system}.install;

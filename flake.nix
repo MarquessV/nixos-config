@@ -42,7 +42,7 @@
 	};	
       });
     
-    apps = forAllSytems (system: {
+    apps = forAllSystems (system: {
       default = self.apps.${system}.install;
       install = {
         type = "app";

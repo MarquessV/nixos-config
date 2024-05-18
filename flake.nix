@@ -75,6 +75,7 @@
       install = {
         type = "app";
 	program = "${self.packages.${system}.install}/bin/install";
+	postUnpack = "chmod +x ${self.packages.${system}.install}/bin/install";
       };
     });
   };

@@ -81,6 +81,7 @@
     wget
     neovim
     git
+    gh
     curl
     kitty
   ];

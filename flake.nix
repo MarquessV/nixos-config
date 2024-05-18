@@ -12,6 +12,8 @@
     	lib = nixpkgs.lib;
 	system = "x86_64-linux";
 	pkgs = nixpkgs.legacyPackages.${system};
+	forAllSystems = inputs.nixpkgs.lib.genAttrs supportedSystems;
+	nixpkgsFor = forAllSystems (system: import inputs.nixpkgs { inherit system; });
   in {
     nixosConfigurations = {
       jefe = lib.nixosSystem {

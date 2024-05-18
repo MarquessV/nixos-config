@@ -28,7 +28,7 @@
 	  editor = "nvim";
 	};
     	lib = nixpkgs.lib;
-	pkgs = nixpkgs.legacyPackages.${system};
+	pkgs = nixpkgs.legacyPackages.${systemSettings.system};
 	home-mangager = inputs.home-manager;
 	supportedSystems = [ "x86_64-linux" ];
 	forAllSystems = inputs.nixpkgs.lib.genAttrs supportedSystems;

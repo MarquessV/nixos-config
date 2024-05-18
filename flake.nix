@@ -9,26 +9,54 @@
 
   outputs = inputs @ { self, nixpkgs, home-manager, ... }:
     let
+    	systemSettings = {
+	  system = "x86_64-linux";
+	  hostname = "jefe";
+	  profile = "personal";
+	  timezone = "America/LosAngeles";
+	  locale = "en_us.UTF-8";
+	  bootMode = "uefi";
+	  bootMountPath = "/boot";
+	};
+	userSettings = {
+	  username = "marquessv";
+	  name = "Marquess";
+	  email = "marquessavaldez@gmail.com";
+	  dotfilesDir = "~/.dotfiles";
+	  term = "kitty";
+	  font = "Iosevka";
+	  editor = "nvim";
+	};
     	lib = nixpkgs.lib;
-	system = "x86_64-linux";
 	pkgs = nixpkgs.legacyPackages.${system};
+	home-mangager = inputs.home-manager;
 	supportedSystems = [ "x86_64-linux" ];
 	forAllSystems = inputs.nixpkgs.lib.genAttrs supportedSystems;
 	nixpkgsFor = forAllSystems (system: import inputs.nixpkgs { inherit system; });
   in {
     nixosConfigurations = {
       jefe = lib.nixosSystem {
-        inherit system;
+        inherit systemSettings;
 	modules = [ 
 	  ./configuration.nix
 	  ./hardware-configuration.nix
 	];
+	specialArgs = {
+	  inherit userSettings;
+	  inherit systemSettings;
+	  inherit inputs;
+	};
       };
     };
     homeConfigurations = {
-       marquess = home-manager.lib.homeManagerConfiguration {
+       user = home-manager.lib.homeManagerConfiguration {
          inherit pkgs;
          modules = [ ./home.nix ];
+	 extraSpecialArgs = {
+	   inherit systemSettings;
+	   inherit userSettings;
+	   inherit inputs;
+	 };
        };
     };
 

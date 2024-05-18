@@ -16,7 +16,10 @@
     nixosConfigurations = {
       jefe = lib.nixosSystem {
         inherit system;
-	modules = [ ./configuration.nix ];
+	modules = [ 
+	  ./configuration.nix
+	  ./hardware-configuration.nix
+	];
       };
     };
     homeConfigurations = {
